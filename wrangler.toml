@@ -1,6 +1,14 @@
 name = "madeiraviva"
 compatibility_date = "2025-09-01"
 main = "worker/index.ts"
+workers_dev = true
+
+# Domínios customizados: o deploy cria os registros na zona Cloudflare
+# automaticamente (a zona precisa estar na conta).
+routes = [
+  { pattern = "ateliemadeiraviva.com", custom_domain = true },
+  { pattern = "www.ateliemadeiraviva.com", custom_domain = true },
+]
 
 # Loja estática (Astro → dist/) servida como assets do Worker. Rotas /api/*
 # caem no worker/index.ts (checkout Mercado Pago, webhook, situação ao vivo).
