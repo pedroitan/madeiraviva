@@ -220,7 +220,7 @@ export default function InstrumentosPage() {
                 marginBottom: '24px',
               }}
             >
-              "Uma árvore que cresceu em silêncio,<br />prestes a cantar."
+              &ldquo;Uma árvore que cresceu em silêncio,<br />prestes a cantar.&rdquo;
             </p>
             <p
               style={{

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:pages": "npm ci && npm --prefix loja ci && next build && npm --prefix loja run build && node scripts/merge-loja.mjs",
     "start": "next start",
     "lint": "next lint"
   },

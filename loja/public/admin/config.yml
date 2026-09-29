@@ -1,0 +1,68 @@
+backend:
+  name: github
+  repo: pedroitan/madeiraviva
+  branch: main
+  # Fluxo editorial: edições viram rascunhos; publicar agrupa num deploy só.
+site_url: https://ateliemadeiraviva.com/loja
+logo_url: /logo-simbolo.svg
+locale: pt
+publish_mode: editorial_workflow
+
+media_folder: site/loja/src/assets/obras
+public_folder: /obras
+
+collections:
+  - name: obras
+    label: Obras
+    folder: site/loja/src/content/obras
+    slug: '{{numero}}'
+    create: true
+    delete: true
+    fields:
+      - { name: numero, label: 'Número da obra (3 dígitos)', widget: string, required: false, pattern: ['^\d{3}$', 'Use 3 dígitos, ex.: 011'], hint: 'Vazio apenas para obras "em breve".' }
+      - { name: nome, label: Nome, widget: string }
+      - name: tipo
+        label: Tipo
+        widget: select
+        options:
+          - { label: Mesa pequena, value: mesa-pequena }
+          - { label: Mesa grande, value: mesa-grande }
+          - { label: Bancada, value: bancada }
+          - { label: Instrumento, value: instrumento }
+      - name: situacao
+        label: Situação
+        widget: select
+        options:
+          - { label: Disponível, value: disponivel }
+          - { label: Reservada, value: reservada }
+          - { label: Adquirida, value: adquirida }
+          - { label: Em breve, value: embreve }
+      - { name: investimento, label: 'Investimento (R$, inteiro)', widget: number, required: false, value_type: int, hint: 'Vazio = "Sob consulta".' }
+      - { name: largura_cm, label: 'Largura (cm)', widget: number, required: false }
+      - { name: profundidade_cm, label: 'Profundidade (cm)', widget: number, required: false }
+      - { name: altura_cm, label: 'Altura (cm)', widget: number, required: false }
+      - { name: acabamento, label: Acabamento, widget: string, default: 'Resina epóxi com pó de mica' }
+      - { name: cor_mica, label: 'Cor do mica', widget: string, required: false }
+      - { name: cor_resina, label: 'Cor da resina (hex, para o desenho)', widget: color, required: false }
+      - name: fotos
+        label: 'Fotos (1 a 8 — a primeira é a capa)'
+        widget: list
+        required: false
+        max: 8
+        field: { label: Foto, name: foto, widget: image }
+      - { name: ordem, label: Ordem no catálogo, widget: number, required: false }
+      - { name: destaque, label: Destaque, widget: boolean, required: false, default: false }
+      - { name: body, label: 'Texto da obra (máx. 400 caracteres)', widget: markdown }
+
+  - name: configuracoes
+    label: Configurações
+    files:
+      - name: geral
+        label: Geral
+        file: site/loja/src/data/config.json
+        fields:
+          - { name: whatsapp, label: 'WhatsApp (DDI+DDD+número, só dígitos)', widget: string }
+          - { name: whatsapp_exibir, label: 'WhatsApp para exibição', widget: string }
+          - { name: email, label: 'E-mail do ateliê', widget: string }
+          - { name: hero_tagline, label: 'Frase de abertura do hero', widget: text }
+          - { name: reserva_horas, label: 'Horas de reserva após contato', widget: number, default: 48 }

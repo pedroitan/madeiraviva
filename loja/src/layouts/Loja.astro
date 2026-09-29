@@ -1,0 +1,96 @@
+---
+import '../styles/global.css';
+import { getCollection } from 'astro:content';
+import { toClient } from '../lib/obras';
+import { fotoUrl } from '../lib/fotos';
+import config from '../data/config.json';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  jsonLd?: Record<string, unknown>;
+}
+
+const { title, description, ogImage, jsonLd } = Astro.props;
+
+const obrasRaw = await getCollection('obras');
+const obrasClient = await Promise.all(
+  obrasRaw.map(async (o) =>
+    toClient(o, o.body ?? '', await fotoUrl(o.data.fotos[0], 288)),
+  ),
+);
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImg = ogImage ?? '/logo-madeira-viva.png';
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Madeira Viva" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImg, Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    <script
+      is:inline
+      defer
+      data-domain="ateliemadeiraviva.com"
+      src="https://plausible.io/js/script.tagged-events.js"></script>
+    <script is:inline type="application/json" id="mv-config" set:html={JSON.stringify(config)} />
+    <script is:inline type="application/json" id="mv-obras" set:html={JSON.stringify(obrasClient)} />
+  </head>
+  <body>
+    <header class="top">
+      <div class="in">
+        <a class="logo" href="/loja" aria-label="Madeira Viva — Marcenaria &amp; Design">
+          <img class="logo-mark" src="/logo-simbolo.svg" alt="" width="32" height="40" />
+          <img class="logo-word" src="/logo-nome.svg" alt="Madeira Viva" width="150" height="30" />
+        </a>
+        <button class="pill" id="openBag" aria-label="Abrir seleção"
+          >Seleção <span class="n" id="bagN" data-zero>0</span></button
+        >
+      </div>
+    </header>
+
+    <slot />
+
+    <div class="scrim" id="scrim"></div>
+
+    <aside class="panel" id="bag" aria-label="Seleção" aria-hidden="true">
+      <div class="phead"><span>Sua seleção</span><button class="x" data-close aria-label="Fechar">×</button></div>
+      <div class="pbody" id="bBody"></div>
+      <div class="pfoot" id="bFoot"></div>
+    </aside>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+      <button class="x" data-lb-close aria-label="Fechar">×</button>
+      <div id="lbBody"></div>
+      <div class="lightbox-nav" id="lbNav"></div>
+    </div>
+
+    <div class="toast" id="toast" role="status"></div>
+
+    <script>
+      import { initChrome } from '../scripts/chrome';
+      initChrome();
+    </script>
+  </body>
+</html>

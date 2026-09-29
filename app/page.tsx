@@ -430,7 +430,7 @@ export default function Home() {
                 marginBottom: '24px',
               }}
             >
-              "Não vendemos móveis. Criamos peças que vão durar mais do que nós — e que contam de onde viemos."
+              &ldquo;Não vendemos móveis. Criamos peças que vão durar mais do que nós — e que contam de onde viemos.&rdquo;
             </blockquote>
             <p
               style={{

@@ -188,7 +188,7 @@ export default function HistoriaPage() {
                 marginBottom: '24px',
               }}
             >
-              "Eu não faço móveis. Eu faço tempo visível."
+              &ldquo;Eu não faço móveis. Eu faço tempo visível.&rdquo;
             </blockquote>
             <p
               style={{

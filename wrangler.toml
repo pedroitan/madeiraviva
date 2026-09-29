@@ -1,0 +1,18 @@
+name = "madeiraviva"
+compatibility_date = "2025-09-01"
+pages_build_output_dir = "out"
+
+# Build no Cloudflare Pages:
+#   Root directory: site
+#   Build command:  npm run build:pages
+#   Output:         out
+
+# Fase 2 — situação ao vivo das obras (reservada/adquirida com TTL de 30 min).
+# Criar o namespace:  npx wrangler kv namespace create SITUACAO
+# e descomentar o binding abaixo com o id gerado.
+# [[kv_namespaces]]
+# binding = "SITUACAO"
+# id = "<id-do-namespace>"
+
+# Fase 2 — segredos via `npx wrangler pages secret put` (nunca no repo):
+#   MP_ACCESS_TOKEN, MP_WEBHOOK_SECRET, RESEND_API_KEY

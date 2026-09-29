@@ -241,7 +241,7 @@ export default function ContatoPage() {
                 marginBottom: '20px',
               }}
             >
-              "Cada conversa começa com uma história. A sua, ou a da peça."
+              &ldquo;Cada conversa começa com uma história. A sua, ou a da peça.&rdquo;
             </blockquote>
             <p
               style={{

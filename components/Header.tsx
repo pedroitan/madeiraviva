@@ -89,9 +89,7 @@ export default function Header() {
             ))}
 
             <a
-              href={process.env.NEXT_PUBLIC_LOJA_URL ?? '/loja'}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/loja"
               className="flex items-center gap-1.5 transition-opacity hover:opacity-70"
               style={{
                 fontFamily: 'var(--font-syne)',
