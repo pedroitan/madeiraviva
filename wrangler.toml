@@ -23,12 +23,11 @@ not_found_handling = "404-page"
 #   Production branch: master
 
 # Situação ao vivo das obras (reserva com TTL 30 min / vendida).
-# Criar o namespace:  npx wrangler kv namespace create SITUACAO
-# e descomentar o binding abaixo com o id gerado.
-# [[kv_namespaces]]
-# binding = "SITUACAO"
-# id = "<id-do-namespace>"
+[[kv_namespaces]]
+binding = "SITUACAO"
+id = "f8760218432f41019336917c72d84c4e"
 
 # Segredos via `npx wrangler secret put` (nunca no repo):
-#   MP_ACCESS_TOKEN     → access token do Mercado Pago (prod ou teste)
+#   MP_ACCESS_TOKEN     → configurado
 #   MP_WEBHOOK_SECRET   → "secret" exibido ao cadastrar o webhook no painel MP
+#                         (https://ateliemadeiraviva.com/api/webhook/mercadopago)
