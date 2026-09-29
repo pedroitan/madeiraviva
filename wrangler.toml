@@ -1,11 +1,20 @@
 name = "madeiraviva"
 compatibility_date = "2025-09-01"
-pages_build_output_dir = "out"
 
-# Build no Cloudflare Pages:
+# Site estático: export do Next.js (site narrativo) + dist da loja Astro
+# mesclados em out/ pelo `npm run build:pages`. Servido como Worker de assets.
+[assets]
+directory = "./out"
+not_found_handling = "404-page"
+
+# Build no Cloudflare (Workers Builds):
 #   Root directory: site
 #   Build command:  npm run build:pages
-#   Output:         out
+#   Deploy command: npx wrangler deploy   (usa este arquivo — sem autoconfig)
+
+# Fase 2 — API da loja (/api/*): adicionar `main = "src/worker.ts"` com
+# binding dos assets e run_worker_first = ["/api"], movendo as rotas de
+# functions/api para o worker.
 
 # Fase 2 — situação ao vivo das obras (reservada/adquirida com TTL de 30 min).
 # Criar o namespace:  npx wrangler kv namespace create SITUACAO
@@ -14,5 +23,5 @@ pages_build_output_dir = "out"
 # binding = "SITUACAO"
 # id = "<id-do-namespace>"
 
-# Fase 2 — segredos via `npx wrangler pages secret put` (nunca no repo):
+# Fase 2 — segredos via `npx wrangler secret put` (nunca no repo):
 #   MP_ACCESS_TOKEN, MP_WEBHOOK_SECRET, RESEND_API_KEY

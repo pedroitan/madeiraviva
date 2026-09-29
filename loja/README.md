@@ -39,23 +39,29 @@ Cada publicação dispara um build no Cloudflare Pages.
 `/obras/<arquivo>`. O código resolve pelo nome do arquivo — não renomear a pasta
 sem ajustar `src/lib/fotos.ts`.
 
-## Deploy — Cloudflare Pages
+## Deploy — Cloudflare (Worker de assets)
 
-Um projeto Pages serve **site narrativo + loja** no mesmo domínio:
+Um único projeto serve **site narrativo + loja** no mesmo domínio. Usamos um
+Worker de assets estáticos (sucessor dos Pages na Cloudflare), definido em
+`site/wrangler.toml` → `[assets] directory = "./out"`.
+
+No projeto conectado ao Git (Workers & Pages):
 
 - **Root directory:** `site`
 - **Build command:** `npm run build:pages`
-- **Output:** `out`
+- **Deploy command:** `npx wrangler deploy`
+- **Production branch:** `main`
 
 `build:pages` faz `npm ci` nas duas pastas, `next build` (export estático →
 `out/`), `astro build` (→ `loja/dist/`) e `scripts/merge-loja.mjs` copia a loja
 para dentro de `out/` — a homepage fica com o site narrativo e `/loja`, `/admin`,
-`/_astro`, sitemap e robots vêm da loja. As Pages Functions ficam em
-`site/functions/` e as rotas `/api/*` já funcionam no mesmo domínio.
+`/_astro`, sitemap e robots vêm da loja.
 
-- **Previews:** automáticos por branch/PR. Produção só após aprovação.
-- **Domínio:** o DNS já está na Cloudflare — apontar `ateliemadeiraviva.com`
-  para o projeto Pages quando aprovado (sem apagar registros antigos antes).
+- **Previews:** automáticos por branch/PR. Produção só após aprovação (merge em main).
+- **Domínio:** o DNS já está na Cloudflare — adicionar `ateliemadeiraviva.com`
+  como domínio customizado do Worker quando aprovado (sem apagar registros antes).
+- **Fase 2:** rotas `/api/*` viram `main = "src/worker.ts"` com `run_worker_first`;
+  o diretório `functions/` atual é a lista de rotas a implementar.
 
 ## Fase 2 (pendente de aprovação)
 
