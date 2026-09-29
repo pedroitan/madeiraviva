@@ -1,32 +1,25 @@
 {
   "name": "madeira-viva",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "build:pages": "npm ci && npm --prefix loja ci && next build && npm --prefix loja run build && node scripts/merge-loja.mjs",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "astro dev",
+    "build": "astro build",
+    "build:pages": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
-    "framer-motion": "^11.3.0",
-    "lucide-react": "^0.577.0",
-    "next": "14.2.35",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-hook-form": "^7.51.0",
-    "zod": "^3.22.4"
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^5.1.0",
+    "sharp": "^0.33.5",
+    "zod": "^3.24.0"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "autoprefixer": "^10.4.19",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.35",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.6.0",
+    "wrangler": "^4.86.0"
   }
 }

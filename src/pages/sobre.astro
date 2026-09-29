@@ -1,0 +1,86 @@
+---
+import Loja from '../layouts/Loja.astro';
+import config from '../data/config.json';
+
+const waNum = config.whatsapp;
+const wa = (msg: string) => `https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`;
+---
+
+<Loja
+  title="O ateliê — Madeira Viva · Marcenaria & Design"
+  description="Um ateliê em Salvador, Bahia, dedicado a uma única jaqueira. Trabalho manual, peças numeradas, certificado de origem."
+>
+  <main class="wrap">
+    <a class="crumb" href="/">← Catálogo</a>
+
+    <section class="hero">
+      <div class="hero-eyebrow">Salvador, Bahia</div>
+      <h1>O <em>ateliê.</em></h1>
+      <p class="hero-tagline">
+        Um espaço de trabalho manual. Sem linha de produção, sem assistentes.
+        Cada peça passa pelas mãos de uma única pessoa.
+      </p>
+      <div class="hero-line"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Origem</div>
+      <h2 class="section-title">Uma árvore, <em>uma raiz.</em></h2>
+      <p class="sobre-texto">
+        A jaqueira foi plantada quando a família construiu a casa no terreno, em Salvador.
+        Décadas de sombra, de fruta, de infância. Quando a árvore adoeceu e precisou ser
+        cortada, a decisão foi carregada de respeito — e pediu um gesto à altura:
+        eternizá-la em obra.
+      </p>
+      <p class="sobre-texto">
+        Cada tora foi serrada manualmente e secada por meses. As fissuras naturais não são
+        defeitos — são a identidade da peça, preenchidas com resina e pó de mica escolhidos
+        para dialogar com os veios daquela tora específica. Quando o estoque dessa árvore
+        acabar, o projeto se encerra. Não haverá segunda edição.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="section-label">O processo</div>
+      <div class="steps steps-light">
+        <div class="step"><div class="step-num">01</div><div class="step-title">A madeira</div><p>Serrada à mão e secada por meses. O tempo revela os veios e as fissuras que definem cada peça.</p></div>
+        <div class="step"><div class="step-num">02</div><div class="step-title">A resina</div><p>Preenche os vazios naturais com pó de mica — dourado, azul ou cobre — em diálogo com cada tora.</p></div>
+        <div class="step"><div class="step-num">03</div><div class="step-title">O acabamento</div><p>Sete etapas de lixamento progressivo antes do verniz. Uma superfície que você precisa tocar para entender.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">O ritmo</div>
+      <dl class="specs sobre-specs">
+        <dt>Capacidade</dt><dd>4 a 6 peças por mês</dd>
+        <dt>Cada peça</dt><dd>Assinada, numerada e com certificado de origem</dd>
+        <dt>Produção</dt><dd>De duas semanas a dois meses por peça</dd>
+        <dt>Localização</dt><dd>Salvador, Bahia, Brasil</dd>
+      </dl>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Contato</div>
+      <p class="sobre-texto">
+        Para visitar o ateliê, combinar entrega ou conversar sobre uma obra,
+        fale diretamente pelo WhatsApp.
+      </p>
+      <div class="ficha-acoes">
+        <a
+          class="pill dark block"
+          target="_blank"
+          rel="noopener"
+          href={wa('Olá! Quero conhecer mais sobre o ateliê Madeira Viva.')}
+          >Falar com o ateliê</a
+        >
+        <a class="pill block" href="/">Ver o catálogo</a>
+      </div>
+    </section>
+
+    <div class="name-display">
+      <img class="lockup" src="/logo-madeira-viva.svg" alt="Madeira Viva — Marcenaria & Design" width="260" />
+      <div class="name-divider"></div>
+      <div class="name-signature">Ateliê em Salvador, Bahia</div>
+    </div>
+  </main>
+</Loja>

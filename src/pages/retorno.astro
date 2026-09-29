@@ -1,0 +1,51 @@
+---
+import Loja from '../layouts/Loja.astro';
+---
+
+<Loja
+  title="Pedido — Madeira Viva"
+  description="Situação do seu pedido na loja Madeira Viva."
+>
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-eyebrow">Pedido</div>
+      <h1 id="retornoTitulo">Recebemos seu <em>pedido.</em></h1>
+      <p class="hero-tagline" id="retornoTexto">
+        Estamos confirmando o pagamento. Você receberá os detalhes em instantes.
+      </p>
+      <div class="hero-line"></div>
+    </section>
+
+    <section class="section">
+      <div class="ficha-acoes">
+        <a class="pill dark block" href="/" id="retornoCta">Voltar ao catálogo</a>
+      </div>
+      <p class="note" style="margin-top:16px">
+        Qualquer dúvida, fale com o ateliê pelo WhatsApp.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const p = new URLSearchParams(location.search);
+    const status = p.get('status') || p.get('collection_status') || '';
+    const titulo = document.getElementById('retornoTitulo')!;
+    const texto = document.getElementById('retornoTexto')!;
+    if (status === 'approved' || status === 'sucesso' || status === 'success') {
+      titulo.innerHTML = 'Obra <em>adquirida.</em>';
+      texto.textContent =
+        'Pagamento confirmado. O ateliê entra em contato para combinar entrega e certificado.';
+      try {
+        localStorage.removeItem('mv-sel');
+      } catch {}
+    } else if (status === 'pending' || status === 'in_process' || status === 'pendente') {
+      titulo.innerHTML = 'Pagamento <em>pendente.</em>';
+      texto.textContent =
+        'Seu pagamento está sendo processado. A obra fica reservada enquanto confirmamos.';
+    } else if (status === 'failure' || status === 'rejected' || status === 'falha') {
+      titulo.innerHTML = 'Pagamento não <em>concluído.</em>';
+      texto.textContent =
+        'O pagamento não foi concluído. Você pode tentar novamente ou reservar pelo WhatsApp.';
+    }
+  </script>
+</Loja>

@@ -1,0 +1,8 @@
+# URLs antigas → estrutura nova (loja na raiz)
+/loja / 301
+/historia /sobre 301
+/atelie /sobre 301
+/instrumentos /sobre 301
+/contato /sobre 301
+/loja/obras/* /obras/:splat 301
+/loja/* / 301

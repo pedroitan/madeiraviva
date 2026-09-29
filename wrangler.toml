@@ -1,27 +1,26 @@
 name = "madeiraviva"
 compatibility_date = "2025-09-01"
+main = "worker/index.ts"
 
-# Site estático: export do Next.js (site narrativo) + dist da loja Astro
-# mesclados em out/ pelo `npm run build:pages`. Servido como Worker de assets.
+# Loja estática (Astro → dist/) servida como assets do Worker. Rotas /api/*
+# caem no worker/index.ts (checkout Mercado Pago, webhook, situação ao vivo).
 [assets]
-directory = "./out"
+directory = "./dist"
+binding = "ASSETS"
 not_found_handling = "404-page"
 
 # Build no Cloudflare (Workers Builds):
-#   Root directory: site
 #   Build command:  npm run build:pages
 #   Deploy command: npx wrangler deploy   (usa este arquivo — sem autoconfig)
+#   Production branch: master
 
-# Fase 2 — API da loja (/api/*): adicionar `main = "src/worker.ts"` com
-# binding dos assets e run_worker_first = ["/api"], movendo as rotas de
-# functions/api para o worker.
-
-# Fase 2 — situação ao vivo das obras (reservada/adquirida com TTL de 30 min).
+# Situação ao vivo das obras (reserva com TTL 30 min / vendida).
 # Criar o namespace:  npx wrangler kv namespace create SITUACAO
 # e descomentar o binding abaixo com o id gerado.
 # [[kv_namespaces]]
 # binding = "SITUACAO"
 # id = "<id-do-namespace>"
 
-# Fase 2 — segredos via `npx wrangler secret put` (nunca no repo):
-#   MP_ACCESS_TOKEN, MP_WEBHOOK_SECRET, RESEND_API_KEY
+# Segredos via `npx wrangler secret put` (nunca no repo):
+#   MP_ACCESS_TOKEN     → access token do Mercado Pago (prod ou teste)
+#   MP_WEBHOOK_SECRET   → "secret" exibido ao cadastrar o webhook no painel MP

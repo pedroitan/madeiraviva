@@ -1,4 +1,0 @@
-# Fase 2 — Pages Functions:
-#   POST /api/checkout            → valida disponibilidade, reserva no KV (TTL 30 min), cria preferência no Mercado Pago
-#   POST /api/webhook/mercadopago → valida assinatura, atualiza situação no KV, envia e-mails (idempotente)
-#   GET  /api/situacao            → situações ao vivo, cache 30 s
