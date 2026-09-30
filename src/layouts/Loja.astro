@@ -23,6 +23,37 @@ const obrasClient = await Promise.all(
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImg = ogImage ?? '/logo-madeira-viva.png';
+
+const siteLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://ateliemadeiraviva.com/#org',
+      name: 'Madeira Viva',
+      url: 'https://ateliemadeiraviva.com',
+      logo: 'https://ateliemadeiraviva.com/logo-madeira-viva.png',
+      sameAs: ['https://www.instagram.com/ateliemadeiraviva/'],
+    },
+    {
+      '@type': 'Store',
+      '@id': 'https://ateliemadeiraviva.com/#atelie',
+      name: 'Ateliê Madeira Viva',
+      description:
+        'Ateliê de marcenaria em Salvador, Bahia. Peças únicas em jaqueira com resina e pó de mica — mesas, bancadas e instrumentos numerados, com certificado de origem.',
+      url: 'https://ateliemadeiraviva.com',
+      image: 'https://ateliemadeiraviva.com/logo-madeira-viva.png',
+      parentOrganization: { '@id': 'https://ateliemadeiraviva.com/#org' },
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Salvador',
+        addressRegion: 'BA',
+        addressCountry: 'BR',
+      },
+      email: config.email,
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -48,6 +79,7 @@ const ogImg = ogImage ?? '/logo-madeira-viva.png';
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={new URL(ogImg, Astro.site)} />
     <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(siteLd)} />
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     <script
       is:inline

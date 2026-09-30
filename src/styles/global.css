@@ -124,6 +124,14 @@ a.card { color: inherit; }
 .sobre-texto { max-width: 620px; font-size: 17px; color: var(--muted); line-height: 1.75; margin-bottom: 24px; }
 .sobre-specs { max-width: 620px; }
 
+/* ── FAQ ── */
+.faq details { border-bottom: 1px solid var(--border); }
+.faq summary { cursor: pointer; list-style: none; padding: 18px 0; font-family: var(--display); font-size: 21px; font-weight: 600; color: var(--darker); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.faq summary::after { content: '+'; font-weight: 300; color: var(--wood-mid); font-size: 26px; flex-shrink: 0; }
+.faq details[open] summary::after { content: '–'; }
+.faq details p { max-width: 620px; font-size: 15px; color: var(--muted); line-height: 1.75; padding-bottom: 20px; }
+.faq summary::-webkit-details-marker { display: none; }
+
 /* ── ASSINATURA ── */
 .name-display { text-align: center; padding-block: 72px 24px; }
 .lockup { width: min(260px, 70%); height: auto; display: block; margin: 0 auto; }

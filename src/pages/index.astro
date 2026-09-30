@@ -10,19 +10,50 @@ const obras = ordenar(await getCollection('obras'));
 const reais = obras.filter((o) => o.data.situacao !== 'embreve');
 const disponiveis = reais.filter((o) => o.data.situacao === 'disponivel').length;
 
+const faq = [
+  {
+    q: 'As peças são únicas?',
+    a: 'Sim. Todas as obras vêm de uma única jaqueira, são numeradas à mão e saem com certificado de origem. Quando o estoque dessa árvore acabar, o projeto se encerra.',
+  },
+  {
+    q: 'Quanto custa uma obra da Madeira Viva?',
+    a: 'Cada obra tem seu investimento próprio, publicado no catálogo. Obras ainda em produção ficam sob consulta — fale com o ateliê pelo WhatsApp.',
+  },
+  {
+    q: 'Como funciona a compra?',
+    a: 'Adicione as obras à seleção e finalize com Pix ou cartão pelo Mercado Pago. Se preferir combinar antes, a reserva pelo WhatsApp segura a obra por 48 horas.',
+  },
+  {
+    q: 'Vocês entregam para outras cidades?',
+    a: 'A entrega e a instalação são combinadas diretamente com o ateliê. Em Salvador a instalação é feita por quem fez a peça; para outras regiões, combinamos o transporte.',
+  },
+];
+
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: 'Loja Madeira Viva',
-  description:
-    'Peças únicas feitas de uma só jaqueira. Cada obra existe em uma unidade e sai com certificado de origem.',
-  url: 'https://ateliemadeiraviva.com',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      name: 'Madeira Viva — mesas e bancadas de jaqueira com resina',
+      description:
+        'Peças únicas em jaqueira com resina epóxi e pó de mica. Cada obra existe em uma unidade, é numerada e sai com certificado de origem.',
+      url: 'https://ateliemadeiraviva.com',
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faq.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ],
 };
 ---
 
 <Loja
-  title="Madeira Viva · Marcenaria & Design"
-  description="Peças únicas em jaqueira, numeradas e com certificado de origem. Uma árvore. Poucas peças."
+  title="Mesas e bancadas de jaqueira com resina — peças únicas | Madeira Viva"
+  description="Ateliê em Salvador, Bahia. Mesas, bancadas e instrumentos em jaqueira com resina e pó de mica — peças únicas, numeradas, com certificado de origem."
   jsonLd={jsonLd}
 >
   <main class="wrap" id="top">
@@ -127,6 +158,18 @@ const jsonLd = {
         de origem. Quando o estoque dessa árvore acabar, o projeto se encerra.
       </p>
       <a class="pill" href="/sobre">Conhecer o ateliê</a>
+    </section>
+
+    <section class="section">
+      <div class="section-label">04 — Perguntas frequentes</div>
+      <div class="faq">
+        {faq.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
     </section>
 
     <div class="name-display">

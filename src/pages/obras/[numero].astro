@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import Loja from '../../layouts/Loja.astro';
 import { STATUS, brl, slug, dimensoes, acabamento } from '../../lib/obras';
-import { fotoMeta } from '../../lib/fotos';
+import { fotoMeta, fotoOg } from '../../lib/fotos';
 import config from '../../data/config.json';
 
 export async function getStaticPaths() {
@@ -27,26 +27,38 @@ const availability = {
   embreve: 'https://schema.org/PreOrder',
 }[sit];
 
-const ogImage = '/logo-madeira-viva.png'; // TODO: foto da obra quando houver fotografia real
+const ogImage = (await fotoOg(obra.data.fotos[0])) ?? '/logo-madeira-viva.png';
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Product',
-  name: `${obra.data.nome} — Obra Nº ${n}`,
-  description: obra.body,
-  image: new URL(ogImage, Astro.site),
-  brand: { '@type': 'Brand', name: 'Madeira Viva' },
-  offers: {
-    '@type': 'Offer',
-    priceCurrency: 'BRL',
-    ...(obra.data.investimento ? { price: obra.data.investimento } : {}),
-    availability,
-    url: `https://ateliemadeiraviva.com/obras/${n}`,
-  },
+  '@graph': [
+    {
+      '@type': 'Product',
+      name: `${obra.data.nome} — Obra Nº ${n}`,
+      description: obra.body,
+      image: new URL(ogImage, Astro.site),
+      brand: { '@type': 'Brand', name: 'Madeira Viva' },
+      seller: { '@id': 'https://ateliemadeiraviva.com/#atelie' },
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'BRL',
+        ...(obra.data.investimento ? { price: obra.data.investimento } : {}),
+        availability,
+        url: `https://ateliemadeiraviva.com/obras/${n}`,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Catálogo', item: 'https://ateliemadeiraviva.com/' },
+        { '@type': 'ListItem', position: 2, name: `Obra Nº ${n}` },
+      ],
+    },
+  ],
 };
 ---
 
 <Loja
-  title={`${obra.data.nome} — Nº ${n} · Madeira Viva`}
+  title={`${obra.data.nome} Nº ${n} — peça única de jaqueira | Madeira Viva`}
   description={(obra.body ?? '').slice(0, 160)}
   ogImage={ogImage}
   jsonLd={jsonLd}

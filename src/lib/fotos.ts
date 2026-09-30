@@ -19,3 +19,11 @@ export async function fotoUrl(nome: string | undefined, width: number): Promise<
   const img = await getImage({ src, width, format: 'webp' });
   return img.src;
 }
+
+/** Foto recortada para Open Graph (1200×630 jpeg) — preview de compartilhamento. */
+export async function fotoOg(nome: string | undefined): Promise<string | null> {
+  const src = fotoMeta(nome);
+  if (!src) return null;
+  const img = await getImage({ src, width: 1200, height: 630, fit: 'cover', format: 'jpeg' });
+  return img.src;
+}
